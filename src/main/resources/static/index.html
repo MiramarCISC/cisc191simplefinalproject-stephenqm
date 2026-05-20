@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple REST JPA Game</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 900px; }
+        label { display: block; margin-top: 0.75rem; }
+        input[type="text"] { width: 100%; max-width: 320px; padding: 0.4rem; }
+        button { margin-top: 1rem; padding: 0.5rem 0.75rem; cursor: pointer; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+        th { background: #f5f5f5; }
+        .winner { font-weight: 700; }
+    </style>
+</head>
+<body>
+<h1>Simple REST JPA Game</h1>
+<p>This page is a tiny browser client. It uses <code>fetch()</code> to call REST endpoints on the Spring Boot server.</p>
+
+<section>
+    <h2>Create a Match</h2>
+    <label>Player One
+        <input id="playerOneName" type="text" value="Ada">
+    </label>
+    <label>Player Two
+        <input id="playerTwoName" type="text" value="Grace">
+    </label>
+    <label>
+        <input id="ranked" type="checkbox" checked>
+        Ranked match
+    </label>
+    <button onclick="createMatch()">Play Match</button>
+</section>
+
+<section>
+    <h2>Match History</h2>
+    <button onclick="loadMatches()">Refresh Matches</button>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th><th>Player One</th><th>Player Two</th><th>Score</th><th>Winner</th><th>Ranked?</th>
+        </tr>
+        </thead>
+        <tbody id="matches"></tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Ranked Leaderboard</h2>
+    <button onclick="loadLeaderboard()">Refresh Leaderboard</button>
+    <table>
+        <thead><tr><th>Player</th><th>Wins</th></tr></thead>
+        <tbody id="leaderboard"></tbody>
+    </table>
+</section>
+
+<script>
+    async function createMatch() {
+        const response = await fetch('/api/matches', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                playerOneName: document.querySelector('#playerOneName').value,
+                playerTwoName: document.querySelector('#playerTwoName').value,
+                ranked: document.querySelector('#ranked').checked
+            })
+        });
+
+        if (!response.ok) {
+            alert('Could not create match.');
+            return;
+        }
+
+        await loadMatches();
+        await loadLeaderboard();
+    }
+
+    async function loadMatches() {
+        const response = await fetch('/api/matches');
+        const matches = await response.json();
+        document.querySelector('#matches').innerHTML = matches.map(match => `
+            <tr>
+                <td>${match.id}</td>
+                <td>${match.playerOneName}</td>
+                <td>${match.playerTwoName}</td>
+                <td>${match.playerOneScore} - ${match.playerTwoScore}</td>
+                <td class="winner">${match.winnerName}</td>
+                <td>${match.ranked ? 'Yes' : 'No'}</td>
+            </tr>
+        `).join('');
+    }
+
+    async function loadLeaderboard() {
+        const response = await fetch('/api/leaderboard');
+        const entries = await response.json();
+        document.querySelector('#leaderboard').innerHTML = entries.map(entry => `
+            <tr><td>${entry.playerName}</td><td>${entry.wins}</td></tr>
+        `).join('');
+    }
+
+    loadMatches();
+    loadLeaderboard();
+</script>
+</body>
+</html>
