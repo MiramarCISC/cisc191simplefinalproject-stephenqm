@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="12" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.sdccd.cisc191.game.ui.FxGameController">
+
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <Label text="Game Server" style="-fx-font-size:20;-fx-font-weight:bold;"/>
+    <Label text="Start Spring Boot server first on localhost:9090" style="-fx-text-fill:gray;"/>
+    <Label fx:id="statusLabel" text="" style="-fx-text-fill:green;"/>
+
+    <HBox spacing="10">
+        <TextField fx:id="playerOneField" promptText="Player One" prefWidth="150"/>
+        <TextField fx:id="playerTwoField" promptText="Player Two" prefWidth="150"/>
+        <CheckBox fx:id="rankedBox" text="Ranked" selected="true"/>
+        <Button text="Play Match" onAction="#createMatch"/>
+    </HBox>
+
+    <Label text="Match History" style="-fx-font-weight:bold;"/>
+    <Button text="Refresh Matches" onAction="#refreshMatches"/>
+    <ListView fx:id="matchList" prefHeight="200"/>
+
+    <Label text="Leaderboard" style="-fx-font-weight:bold;"/>
+    <Button text="Refresh Leaderboard" onAction="#refreshLeaderboard"/>
+    <ListView fx:id="leaderboardList" prefHeight="150"/>
+
+</VBox>
