@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-// MODULE 3: Implements comparable so matches can be sorted by date
+// MODULE 3: Implements comparable so matches can be sorted by dates
 public class GameMatch implements Comparable<GameMatch> {
 
     @Id
