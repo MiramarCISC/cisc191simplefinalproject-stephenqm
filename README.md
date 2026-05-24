@@ -114,3 +114,42 @@ Included tests:
 | `GameServiceTest` | Service-layer game logic and persistence behavior |
 | `GameControllerTest` | REST endpoint responses |
 | `WebInterfaceTest` | The browser page loads and points to the REST API |
+
+Project Summary:
+EpicGameLeaderboard is a match tracking and leaderboard application that is made for friend groups and gamers that want to keep scores across many sessions of play. Users are able to log matches between two players, have scores generated automatically and instantly see a ranked leaderboard showing who has the most wins overall. The problem it solves is that many friend groups have no way to track competitive results over a long period of time, so wins are forgotten. EpicGameLeaderboard Stores every match in a persisted database so the leaderboard keeps growing the more you play. It runs as a SpringBoot server with both a browser interface and a JavaFX desktop client, making it accessible from multiple platforms.
+
+
+Module Topic Locations
+Module 1: Arrays + OO Refresh
+
+What: A 2D array int[][] scoreHistory stores the scores of the last 10 matches. Each row holds [playerOneScore, playerTwoScore]. A method iterates the array in order to find the highest score
+Code: src/main/java/edu/sdccd/cisc191/game/service/GameService.java lines 26-83
+Test: src/test/java/edu/sdccd/cisc191/game/ModuleIntegrationTest.java lines 28-41
+
+Module 2: OO Design + Functional Interfaces
+
+What: A Predicate<String> named isValidName validates player names before a match is created. A custom @FunctionalInterface called BackgroundTask is used in the JavaFX controller to abstract background HTTP work.
+Code: src/main/java/edu/sdccd/cisc191/game/service/GameService.java, lines 29-30; 
+Test: src/test/java/edu/sdccd/cisc191/game/ModuleIntegrationTest.java lines 43-56
+
+Module 3: Inheritance + Polymorphism
+
+Module 4: Exceptions + File I/O + Database Persistence
+
+What: InvalidMatchException is a custom unchecked exception thrown when a player name is blank or null. Match data is persisted to a file-backed H2 database via Spring Data JPA.
+Code: src/main/java/edu/sdccd/cisc191/game/service/GameService.java lines 39-44
+Test: src/test/java/edu/sdccd/cisc191/game/ModuleIntegrationTest.java lines 68-82
+
+Module 5: Recursion + Algorithms
+
+What: findTopWinner() recursive scans a list of leaderboard entries to find the player with the most wins, base case returns the last entry. Recursive case compares the current entry to the best of the rest
+Code: src/main/java/edu/sdccd/cisc191/game/service/GameService.java lines 114-123
+Test: src/test/java/edu/sdccd/cisc191/game/ModuleIntegrationTest.java lines 84-101
+
+Module 6: Collections + Generics + Advanced Streams
+
+What: getRankedLeaderboard() uses Collectors.groupingBy() and Collectors.counting() to group matches by winner and count wins. Results are returned as a sorted List<LeaderboardEntry> using stream chaining
+Code: src/main/java/edu/sdccd/cisc191/game/service/GameService.java lines 103-112
+Test: src/test/java/edu/sdccd/cisc191/game/ModuleIntegrationTest.java lines 103-121
+
+Module 7: JavaFX + Events + Lambdas
