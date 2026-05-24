@@ -4,11 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
 import java.time.LocalDateTime;
 
 @Entity
-public class GameMatch {
+// MODULE 3: Implements Comparable so matches can be sorted by date
+public class GameMatch implements Comparable<GameMatch> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +22,7 @@ public class GameMatch {
     private boolean ranked;
     private LocalDateTime createdAt;
 
-    protected GameMatch() {
-        // JPA requires a no-argument constructor.
-    }
+    protected GameMatch() {}
 
     public GameMatch(String playerOneName, String playerTwoName, int playerOneScore,
                      int playerTwoScore, String winnerName, boolean ranked) {
@@ -36,35 +35,18 @@ public class GameMatch {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
+    // MODULE 3: Newest matches come first
+    @Override
+    public int compareTo(GameMatch other) {
+        return other.createdAt.compareTo(this.createdAt);
     }
 
-    public String getPlayerOneName() {
-        return playerOneName;
-    }
-
-    public String getPlayerTwoName() {
-        return playerTwoName;
-    }
-
-    public int getPlayerOneScore() {
-        return playerOneScore;
-    }
-
-    public int getPlayerTwoScore() {
-        return playerTwoScore;
-    }
-
-    public String getWinnerName() {
-        return winnerName;
-    }
-
-    public boolean isRanked() {
-        return ranked;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    public Long getId() { return id; }
+    public String getPlayerOneName() { return playerOneName; }
+    public String getPlayerTwoName() { return playerTwoName; }
+    public int getPlayerOneScore() { return playerOneScore; }
+    public int getPlayerTwoScore() { return playerTwoScore; }
+    public String getWinnerName() { return winnerName; }
+    public boolean isRanked() { return ranked; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }
