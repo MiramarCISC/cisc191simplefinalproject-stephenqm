@@ -115,6 +115,8 @@ Included tests:
 | `GameControllerTest` | REST endpoint responses |
 | `WebInterfaceTest` | The browser page loads and points to the REST API |
 
+Project Summary:
+EpicGameLeaderboard is a match tracking and leaderboard application that is made for friend groups and gamers that want to keep scores across many sessions of play. Users are able to log matches between two players, have scores generated automatically and instantly see a ranked leaderboard showing who has the most wins overall. The problem it solves is that many friend groups have no way to track competitive results over a long period of time, so wins are forgotten. EpicGameLeaderboard Stores every match in a persisted database so the leaderboard keeps growing the more you play. It runs as a SpringBoot server with both a browser interface and a JavaFX desktop client, making it accessible from multiple platforms.
 
 
 Module Topic Locations
