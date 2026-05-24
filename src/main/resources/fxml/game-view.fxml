@@ -35,4 +35,10 @@
     <Button text="Refresh Leaderboard" onAction="#refreshLeaderboard"/>
     <ListView fx:id="leaderboardList" prefHeight="150"/>
 
+    <Label text="Match ID Actions" style="-fx-font-weight:bold;"/>
+    <HBox spacing="10">
+        <TextField fx:id="matchIdField" promptText="Match ID" prefWidth="100"/>
+        <Button text="Get Match" onAction="#getMatchById"/>
+        <Button text="Delete Match" onAction="#deleteMatch"/>
+    </HBox>
 </VBox>
