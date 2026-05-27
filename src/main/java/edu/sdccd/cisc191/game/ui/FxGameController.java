@@ -20,18 +20,24 @@ public class FxGameController {
 
     @FXML
     private TextField playerOneField;
+    
     @FXML
     private TextField playerTwoField;
+
     @FXML
     private CheckBox rankedBox;
+
     @FXML
     private Label statusLabel;
+
     @FXML
     private ListView<String> matchList;
+    
     @FXML
     private ListView<String> leaderboardList;
+
     @FXML
-    private void createMatch() {
+    private void createMatch() 
         statusLabel.setText("Create Match clicked");
     }
 
