@@ -14,8 +14,11 @@ public class GameApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         URL resource = getClass().getResource("/fxml/game-view.fxml");
-        if (resource == null) throw new RuntimeException("Cannot find game-view.fxml — check it is in src/main/resources/fxml/");
-        FXMLLoader loader = new FXMLLoader(resource);        Parent root = loader.load();
+        if (resource == null) {
+            throw new RuntimeException("Cannot find game-view.fxml — check it is in src/main/resources/fxml/");
+        }
+        FXMLLoader loader = new FXMLLoader(resource);
+        Parent root = loader.load();
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Game Server");
         stage.setScene(scene);
